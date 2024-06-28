@@ -16,14 +16,9 @@
 
 <script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=a1c75937895aeb9827382af136329ad2"></script>
 <script>
-    const firstdb = JSON.parse(document.querySelector("#mapBtns .btn").dataset.map);
-
-
-    mapoutput (firstdb[0], firstdb[1]); 
-    // 여기 수치를 그냥 넣지말고 첫번째 지도가 노출되도록 수정해주세요
-
-    const btns = document.querySelectorAll("#mapBtns .btn");
-
+  
+    const btns = document.querySelectorAll("#mapBtns .btn"); // array데이터
+    
     btns.forEach(function( ele , idx ){
         ele.addEventListener('click', function(){           
             const convertDB = JSON.parse(this.dataset.map);           
@@ -31,7 +26,15 @@
         })
     })
 
-    function  mapoutput (a, b){ // 모형
+    btns[0].click(); // 실행식의 위치 너무 중요!!! 순차적함수 , 귀속함수  
+    let count = 0;
+    setInterval(function(){
+        count++;
+        count %= btns.length;
+        btns[count].click();
+    }, 1000)
+
+    function  mapoutput (a, b){ //선언적함수
         const mapContainer = document.getElementById('map'),  
         mapOption = { 
             center: new kakao.maps.LatLng(a, b), 
